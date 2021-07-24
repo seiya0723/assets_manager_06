@@ -36,7 +36,7 @@ class BalanceView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
 
-        categories = Category.objects.all()
+        categories = Category.objects.all().order_by("-income","-id")
 
         # 最古から最新の年リストを生成(決済日)
         dt = datetime.datetime.now()
@@ -175,12 +175,7 @@ class BalanceDeleteView(LoginRequiredMixin, View):
         #======================ここまでBalanceViewのPOST文と共通している============
 
 
-        print(json)
-
-
         return JsonResponse(json)
-
-
 
 delete = BalanceDeleteView.as_view()
 

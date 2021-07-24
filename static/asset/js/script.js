@@ -30,8 +30,31 @@ window.addEventListener("load" , function(){
 
 
 
+    /*
     $(".category_income").on("click",function(){ console.log("収入"); });
     $(".category_spending").on("click",function(){ console.log("支出"); });
+    */
+
+    //収入支出カテゴリ指定時に不要な入力欄を無効化する
+    $("#balance_category").on("change", function(){
+        let cate    = $(this).find(":selected").attr("class");
+        
+        if (cate === "category_spending"){
+            console.log("支出");
+            $("#main_form > [name='income']").val("0");
+            $("#main_form > [name='income']").prop("disabled",true);
+            $("#main_form > [name='spending']").prop("disabled",false);
+        }
+        else if (cate === "category_income"){
+            console.log("収入");
+            $("#main_form > [name='spending']").val("0");
+            $("#main_form > [name='spending']").prop("disabled",true);
+            $("#main_form > [name='income']").prop("disabled",false);
+        }
+
+        //console.log( $(this).find(":selected").attr("class") );
+    });
+
 
 
     $("#main_form_submit").on("click",function(){ submit(); });
@@ -148,22 +171,24 @@ function get_bar_data(){
 
         //あればString(month)+"月"に数値が追加される。初期化の必要はないので、elseはコメントアウト
         for (let i=0;i<length;i++){
+            income_data[String(month)+"月"] += Number(income.eq(i).text().replace(/,/g,""));
+            /*
             if ( income.eq(i).text() === "0" ){ continue; }
             if (String(month)+"月" in income_data){
                 income_data[String(month)+"月"] += Number(income.eq(i).text().replace(/,/g,""));
             }
-            /*
             else{
                 income_data[String(month)+"月"] = Number(income.eq(i).text().replace(/,/g,"")) ;
             }
             */
         }
         for (let i=0;i<length;i++){
+            spending_data[String(month)+"月"] += Number(spending.eq(i).text().replace(/,/g,""));
+            /*
             if ( spending.eq(i).text() === "0" ){ continue; }
             if (String(month)+"月" in spending_data){
                 spending_data[String(month)+"月"] += Number(spending.eq(i).text().replace(/,/g,""));
             }
-            /*
             else{
                 spending_data[String(month)+"月"] = Number(spending.eq(i).text().replace(/,/g,"")) ;
             }

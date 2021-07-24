@@ -73,10 +73,10 @@
         {% csrf_token %}
 
         <div class="select_square">
-            <select name="category">
+            <select id="balance_category" name="category">
                 <option value="">カテゴリを選んでください</option>
                 {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
+                <option class="{% if category.income %}category_income{% else %}category_spending{% endif %}" value="{{ category.id }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
         </div>
